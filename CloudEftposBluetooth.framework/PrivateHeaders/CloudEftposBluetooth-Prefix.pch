@@ -1,0 +1,20 @@
+//
+// Prefix header for all source files of the 'CloudEftposSDK' target in the 'CloudEftposSDK' project
+//
+
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <QuartzCore/QuartzCore.h>
+    #import <UIKit/UIKit.h>
+    #import "QPSDDLog.h"
+    #import "CloudLog.h"
+
+    #if TRUE // VERBOSE LOGGING
+    #define SDK_GLOBAL_LOG_LEVEL LOG_LEVEL_VERBOSE
+    #else
+    #define SDK_GLOBAL_LOG_LEVEL LOG_LEVEL_INFO
+    #endif
+#endif
+
+#include "GADebugMacros.h"

@@ -1,0 +1,10 @@
+framework module CloudEftposBluetooth {
+   umbrella header "CloudEftposSDK-Bridging-Header.h"
+   export *
+   module * { export * }
+}
+
+module CloudEftposBluetooth.Swift {
+    header "CloudEftposBluetooth-Swift.h"
+    requires objc
+}

@@ -1,0 +1,250 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-module-flags: -target arm64-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name CloudEftposBluetooth
+import CloudEftpos
+@_exported import CloudEftposBluetooth
+import Foundation
+import Security
+import Swift
+public class EncryptedMessage : CloudEftposBluetooth.Message {
+  final public let data: Foundation.Data
+  required public init(data: Foundation.Data)
+  public func decrypted(with key: CloudEftposBluetooth.PrivateKey, padding: CloudEftposBluetooth.Padding) throws -> CloudEftposBluetooth.ClearMessage
+  @objc deinit
+}
+public class Signature {
+  public enum DigestType {
+    case sha1
+    case sha224
+    case sha256
+    case sha384
+    case sha512
+    public static func == (a: CloudEftposBluetooth.Signature.DigestType, b: CloudEftposBluetooth.Signature.DigestType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  final public let data: Foundation.Data
+  public init(data: Foundation.Data)
+  public convenience init(base64Encoded base64String: Swift.String) throws
+  public var base64String: Swift.String {
+    get
+  }
+  @objc deinit
+}
+public typealias Padding = Security.SecPadding
+public enum SwiftyRSA {
+  @available(iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+  public static func generateRSAKeyPair(sizeInBits size: Swift.Int) throws -> (privateKey: CloudEftposBluetooth.PrivateKey, publicKey: CloudEftposBluetooth.PublicKey)
+}
+public class PublicKey : CloudEftposBluetooth.Key {
+  final public let reference: Security.SecKey
+  final public let originalData: Foundation.Data?
+  public func pemString() throws -> Swift.String
+  required public init(reference: Security.SecKey) throws
+  required public init(data: Foundation.Data) throws
+  public static func publicKeys(pemEncoded pemString: Swift.String) -> [CloudEftposBluetooth.PublicKey]
+  @objc deinit
+}
+public class ClearMessage : CloudEftposBluetooth.Message {
+  final public let data: Foundation.Data
+  required public init(data: Foundation.Data)
+  public convenience init(string: Swift.String, using encoding: Swift.String.Encoding) throws
+  public func string(encoding: Swift.String.Encoding) throws -> Swift.String
+  public func encrypted(with key: CloudEftposBluetooth.PublicKey, padding: CloudEftposBluetooth.Padding) throws -> CloudEftposBluetooth.EncryptedMessage
+  public func signed(with key: CloudEftposBluetooth.PrivateKey, digestType: CloudEftposBluetooth.Signature.DigestType) throws -> CloudEftposBluetooth.Signature
+  public func verify(with key: CloudEftposBluetooth.PublicKey, signature: CloudEftposBluetooth.Signature, digestType: CloudEftposBluetooth.Signature.DigestType) throws -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CloudEftposBluetoothModule : CloudEftpos.CloudEftposBluetoothProtocol {
+  public var statusDidChange: (([Swift.AnyHashable : Any]?) -> Swift.Void)?
+  public var themePrimaryColor: UIKit.UIColor
+  public func getModuleType() -> CloudEftpos.CloudEftposModuleType?
+  public func forceProductionMode()
+  public func forceDeveloperMode()
+  public init(productionMode: Swift.Bool)
+  public func registerOnBluetoothStatusChange(_ statusDidChange: (([Swift.AnyHashable : Any]?) -> Swift.Void)?)
+  public func authorise(email: Swift.String, password: Swift.String, posName: Swift.String, onCompletion: ((Swift.Bool, Swift.Error?) -> Swift.Void)?)
+  public func startTransaction(transactionRequest: CloudEftpos.BaseTransactionRequest, displayBlock: CloudEftpos.baseCustomDisplayBlock? = nil, promptBlock: CloudEftpos.baseCustomPromptBlock? = nil, signaturePromptBlock: CloudEftpos.baseCustomSignaturePromptBlock? = nil, withPresentingViewController: UIKit.UIViewController, animated: Swift.Bool, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
+  public func cancelTransaction()
+  public func pairDevice(withPresenting: UIKit.UIViewController, animated: Swift.Bool, onCompletion: ((Swift.Error?) -> Swift.Void)? = nil)
+  public func unpairDevice()
+  public func advancedMenu(with presentingViewController: UIKit.UIViewController, animated: Swift.Bool, onClose: (() -> Swift.Void)?, onPrint: ((Swift.String?, Swift.String?) -> Swift.Void)?)
+  public func recoverTransaction(with posReference: Swift.String, transactionType: CloudEftpos.BaseTransactionType, amount: Swift.UInt32, presentingViewController: UIKit.UIViewController, animated: Swift.Bool, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
+  public func getLastTransaction(with posReference: Swift.String, transactionType: CloudEftpos.BaseTransactionType, amount: Swift.UInt32, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
+  public func sleepDevice()
+  public func wakeDevice()
+  public func deauthorise()
+  public func isAuthorised() -> Swift.Bool
+  public func close()
+  @objc deinit
+}
+public protocol Message {
+  var data: Foundation.Data { get }
+  var base64String: Swift.String { get }
+  init(data: Foundation.Data)
+  init(base64Encoded base64String: Swift.String) throws
+}
+extension Message {
+  public var base64String: Swift.String {
+    get
+  }
+  public init(base64Encoded base64String: Swift.String) throws
+}
+@objc(PublicKey) public class _objc_PublicKey : ObjectiveC.NSObject, CloudEftposBluetooth.Key {
+  @objc public var reference: Security.SecKey {
+    @objc get
+  }
+  @objc public var originalData: Foundation.Data? {
+    @objc get
+  }
+  @objc public func pemString() throws -> Swift.String
+  @objc public func data() throws -> Foundation.Data
+  @objc public func base64String() throws -> Swift.String
+  required public init(swiftValue: CloudEftposBluetooth.PublicKey)
+  @objc required public init(data: Foundation.Data) throws
+  @objc required public init(reference: Security.SecKey) throws
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc required public init(pemEncoded pemString: Swift.String) throws
+  @objc required public init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc required public init(derNamed derName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc public static func publicKeys(pemEncoded pemString: Swift.String) -> [CloudEftposBluetooth._objc_PublicKey]
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(PrivateKey) public class _objc_PrivateKey : ObjectiveC.NSObject, CloudEftposBluetooth.Key {
+  @objc public var reference: Security.SecKey {
+    @objc get
+  }
+  @objc public var originalData: Foundation.Data? {
+    @objc get
+  }
+  @objc public func pemString() throws -> Swift.String
+  @objc public func data() throws -> Foundation.Data
+  @objc public func base64String() throws -> Swift.String
+  required public init(swiftValue: CloudEftposBluetooth.PrivateKey)
+  @objc required public init(data: Foundation.Data) throws
+  @objc required public init(reference: Security.SecKey) throws
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc required public init(pemEncoded pemString: Swift.String) throws
+  @objc required public init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc required public init(derNamed derName: Swift.String, in bundle: Foundation.Bundle) throws
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc(VerificationResult) public class _objc_VerificationResult : ObjectiveC.NSObject {
+  @objc final public let isSuccessful: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(ClearMessage) public class _objc_ClearMessage : ObjectiveC.NSObject, CloudEftposBluetooth.Message {
+  @objc public var base64String: Swift.String {
+    @objc get
+  }
+  @objc public var data: Foundation.Data {
+    @objc get
+  }
+  required public init(swiftValue: CloudEftposBluetooth.ClearMessage)
+  @objc required public init(data: Foundation.Data)
+  @objc required public init(string: Swift.String, using rawEncoding: Swift.UInt) throws
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc public func string(encoding rawEncoding: Swift.UInt) throws -> Swift.String
+  @objc public func encrypted(with key: CloudEftposBluetooth._objc_PublicKey, padding: CloudEftposBluetooth.Padding) throws -> CloudEftposBluetooth._objc_EncryptedMessage
+  @objc public func signed(with key: CloudEftposBluetooth._objc_PrivateKey, digestType: CloudEftposBluetooth._objc_Signature.DigestType) throws -> CloudEftposBluetooth._objc_Signature
+  @objc public func verify(with key: CloudEftposBluetooth._objc_PublicKey, signature: CloudEftposBluetooth._objc_Signature, digestType: CloudEftposBluetooth._objc_Signature.DigestType) throws -> CloudEftposBluetooth._objc_VerificationResult
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(EncryptedMessage) public class _objc_EncryptedMessage : ObjectiveC.NSObject, CloudEftposBluetooth.Message {
+  @objc public var base64String: Swift.String {
+    @objc get
+  }
+  @objc public var data: Foundation.Data {
+    @objc get
+  }
+  required public init(swiftValue: CloudEftposBluetooth.EncryptedMessage)
+  @objc required public init(data: Foundation.Data)
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc public func decrypted(with key: CloudEftposBluetooth._objc_PrivateKey, padding: CloudEftposBluetooth.Padding) throws -> CloudEftposBluetooth._objc_ClearMessage
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(Signature) public class _objc_Signature : ObjectiveC.NSObject {
+  @objc public enum DigestType : Swift.Int {
+    case sha1
+    case sha224
+    case sha256
+    case sha384
+    case sha512
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public var base64String: Swift.String {
+    @objc get
+  }
+  @objc public var data: Foundation.Data {
+    @objc get
+  }
+  required public init(swiftValue: CloudEftposBluetooth.Signature)
+  @objc public init(data: Foundation.Data)
+  @objc required public init(base64Encoded base64String: Swift.String) throws
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol Key : AnyObject {
+  var reference: Security.SecKey { get }
+  var originalData: Foundation.Data? { get }
+  init(data: Foundation.Data) throws
+  init(reference: Security.SecKey) throws
+  init(base64Encoded base64String: Swift.String) throws
+  init(pemEncoded pemString: Swift.String) throws
+  init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle) throws
+  init(derNamed derName: Swift.String, in bundle: Foundation.Bundle) throws
+  func pemString() throws -> Swift.String
+  func data() throws -> Foundation.Data
+  func base64String() throws -> Swift.String
+}
+extension Key {
+  public func base64String() throws -> Swift.String
+  public func data() throws -> Foundation.Data
+  public init(base64Encoded base64String: Swift.String) throws
+  public init(pemEncoded pemString: Swift.String) throws
+  public init(pemNamed pemName: Swift.String, in bundle: Foundation.Bundle = Bundle.main) throws
+  public init(derNamed derName: Swift.String, in bundle: Foundation.Bundle = Bundle.main) throws
+}
+public enum SwiftyRSAError : Swift.Error {
+  case pemDoesNotContainKey
+  case keyRepresentationFailed(error: CoreFoundation.CFError?)
+  case keyGenerationFailed(error: CoreFoundation.CFError?)
+  case keyCreateFailed(error: CoreFoundation.CFError?)
+  case keyAddFailed(status: Darwin.OSStatus)
+  case keyCopyFailed(status: Darwin.OSStatus)
+  case tagEncodingFailed
+  case asn1ParsingFailed
+  case invalidAsn1RootNode
+  case invalidAsn1Structure
+  case invalidBase64String
+  case chunkDecryptFailed(index: Swift.Int)
+  case chunkEncryptFailed(index: Swift.Int)
+  case stringToDataConversionFailed
+  case dataToStringConversionFailed
+  case invalidDigestSize(digestSize: Swift.Int, maxChunkSize: Swift.Int)
+  case signatureCreateFailed(status: Darwin.OSStatus)
+  case signatureVerifyFailed(status: Darwin.OSStatus)
+  case pemFileNotFound(name: Swift.String)
+  case derFileNotFound(name: Swift.String)
+  case notAPublicKey
+  case notAPrivateKey
+}
+public class PrivateKey : CloudEftposBluetooth.Key {
+  final public let reference: Security.SecKey
+  final public let originalData: Foundation.Data?
+  public func pemString() throws -> Swift.String
+  required public init(reference: Security.SecKey) throws
+  required public init(data: Foundation.Data) throws
+  @objc deinit
+}
