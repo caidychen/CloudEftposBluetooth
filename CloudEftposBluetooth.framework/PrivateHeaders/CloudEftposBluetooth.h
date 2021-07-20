@@ -48,28 +48,28 @@
  *  @discussion The TransactionRequest object should be set with the relevant
  *              parameters before passing it to the startTransaction method.
  */
-@interface TransactionRequest : NSObject
+@interface _TransactionRequest : NSObject
 
 typedef enum {
     Purchase = 0x01,
     Refund = 0x02
-} TransactionType;
+} _TransactionType;
 
 typedef enum {
     Classic = 0x00,
     Dark = 0x01,
     Modern = 0x02,
     ModernDark = 0x03
-} TransactionTheme;
+} _TransactionTheme;
 typedef enum {
     Card = 0,
     Alipay = 16
-} TransactionMode;
+} _TransactionMode;
 
 @property (nonatomic) UInt32 amount;
 @property (nonatomic) UInt32 cashout;
 @property (nonatomic) UInt32 tipamount;
-@property (nonatomic) TransactionType transactionType;
+@property (nonatomic) _TransactionType transactionType;
 @property (nonatomic, strong) NSString *posReference;
 @property (nonatomic, strong) NSString *posNotes;
 @property (nonatomic, strong) NSString *gpsLocation;
@@ -79,8 +79,8 @@ typedef enum {
 @property (nonatomic) bool autoGpsLocation;
 @property (nonatomic) bool bypassTerminalSurcharge;
 @property (nonatomic) bool cancelAsButton;
-@property (nonatomic) TransactionTheme theme;
-@property (nonatomic) TransactionMode transactionMode;
+@property (nonatomic) _TransactionTheme theme;
+@property (nonatomic) _TransactionMode transactionMode;
 @property (nonatomic) UIColor *themePrimaryColor;
 
 @end
@@ -306,7 +306,7 @@ onCompletion:(void (^)(NSError *error))onCompletion;
  *  @discussion Initiates a transaction with the given details. Displays a
  *  transaction screen to the operator.
  */
--(void) startTransaction:(TransactionRequest *)transactionRequest
+-(void) startTransaction:(_TransactionRequest *)transactionRequest
 withPresentingViewController:(UIViewController *)presentingViewController
                 animated:(BOOL)animated
             onCompletion:(void (^)(NSDictionary *result, NSError *error))onCompletion;
@@ -360,7 +360,7 @@ withPresentingViewController:(UIViewController *)presentingViewController
  *  @discussion This block is called every time the PINpad sends a display
  *  message to the POS.
  */
-typedef void (^customDisplayBlock)(NSString *msg);
+typedef void (^_customDisplayBlock)(NSString *msg);
 
 /*!
  *  @block customPromptBlock
@@ -376,10 +376,10 @@ typedef void (^customDisplayBlock)(NSString *msg);
  *  select a key.
  *  See promptResponse below for how to respond to this prompt.
  */
-typedef void (^customPromptBlock)(NSString *text, bool inputRequired, NSArray *keys);
+typedef void (^_customPromptBlock)(NSString *text, bool inputRequired, NSArray *keys);
 
 
-typedef void (^signatureCaptureFallback)(NSString *receipt, NSArray *keys);
+typedef void (^_signatureCaptureFallback)(NSString *receipt, NSArray *keys);
 /*!
  *  @block customSignaturePromptBlock
  *
@@ -398,7 +398,7 @@ typedef void (^signatureCaptureFallback)(NSString *receipt, NSArray *keys);
  *  matches and respond with either "yes", "no" or "cancel".
  *  See promptResponse below for how to respond to this prompt.
  */
-typedef void (^customSignaturePromptBlock)(NSString *receipt, NSArray *keys, signatureCaptureFallback fallbackBlock);
+typedef void (^_customSignaturePromptBlock)(NSString *receipt, NSArray *keys, _signatureCaptureFallback fallbackBlock);
 
 /*!
  *  @method startTrasaction:
@@ -419,10 +419,10 @@ typedef void (^customSignaturePromptBlock)(NSString *receipt, NSArray *keys, sig
  *  @discussion The custom start transaction can be used if you require
  *  customisation of the prompt and signature callbacks.
  */
--(void) startTransaction:(TransactionRequest *)transactionRequest
-            displayBlock:(customDisplayBlock)displayBlock
-             promptBlock:(customPromptBlock)promptBlock
-    signaturePromptBlock:(customSignaturePromptBlock)signaturePromptBlock
+-(void) startTransaction:(_TransactionRequest *)transactionRequest
+            displayBlock:(_customDisplayBlock)displayBlock
+             promptBlock:(_customPromptBlock)promptBlock
+    signaturePromptBlock:(_customSignaturePromptBlock)signaturePromptBlock
 withPresentingViewController:(UIViewController *)presentingViewController
                 animated:(BOOL)animated
             onCompletion:(void (^)(NSDictionary *result, NSError *error))onCompletion;
@@ -436,10 +436,10 @@ withPresentingViewController:(UIViewController *)presentingViewController
  *  @discussion This method should not be used by any third parties
  *  outside of Quest Payment Systems!
  */
--(void) startTransaction:(TransactionRequest *)transactionRequest
-            displayBlock:(customDisplayBlock)displayBlock
-             promptBlock:(customPromptBlock)promptBlock
-    signaturePromptBlock:(customSignaturePromptBlock)signaturePromptBlock
+-(void) startTransaction:(_TransactionRequest *)transactionRequest
+            displayBlock:(_customDisplayBlock)displayBlock
+             promptBlock:(_customPromptBlock)promptBlock
+    signaturePromptBlock:(_customSignaturePromptBlock)signaturePromptBlock
 withPresentingViewController:(UIViewController *)presentingViewController
                 animated:(BOOL)animated
             onCompletion:(void (^)(NSDictionary *result, NSError *error))onCompletion
@@ -534,7 +534,7 @@ onPrint:(void (^)(NSString *type, NSString *receipt))onPrint;
 // Get the last transaction result
 -(void) recoverTransactionWithPosReference
 :(NSString *)posReference
-transactionType:(TransactionType)transactionType
+transactionType:(_TransactionType)transactionType
 amount:(UInt32)amount
 withPresentingViewController:(UIViewController *)presentingViewController
 animated:(bool)animated
@@ -566,7 +566,7 @@ onCompletion:(void (^)(NSDictionary *result, NSError *error))onCompletion;
 // Get the last transaction result
 -(void) getLastTransactionWithPosReference
 :(NSString *)posReference
-transactionType:(TransactionType)transactionType
+transactionType:(_TransactionType)transactionType
 amount:(UInt32)amount
 onCompletion:(void (^)(NSDictionary *result, NSError *error))onCompletion;
 

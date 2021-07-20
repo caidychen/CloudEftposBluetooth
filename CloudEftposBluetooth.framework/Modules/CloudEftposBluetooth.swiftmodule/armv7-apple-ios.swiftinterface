@@ -58,21 +58,24 @@ public class ClearMessage : CloudEftposBluetooth.Message {
   @objc deinit
 }
 @_hasMissingDesignatedInitializers public class CloudEftposBluetoothModule : CloudEftpos.CloudEftposBluetoothProtocol {
+  public static var shared: CloudEftposBluetooth.CloudEftposBluetoothModule {
+    get
+  }
   public var statusDidChange: (([Swift.AnyHashable : Any]?) -> Swift.Void)?
-  public var themePrimaryColor: UIKit.UIColor
   public func getModuleType() -> CloudEftpos.CloudEftposModuleType?
   public func forceProductionMode()
   public func forceDeveloperMode()
-  public init(productionMode: Swift.Bool)
+  public class func setup(productionMode: Swift.Bool)
   public func registerOnBluetoothStatusChange(_ statusDidChange: (([Swift.AnyHashable : Any]?) -> Swift.Void)?)
   public func authorise(email: Swift.String, password: Swift.String, posName: Swift.String, onCompletion: ((Swift.Bool, Swift.Error?) -> Swift.Void)?)
-  public func startTransaction(transactionRequest: CloudEftpos.BaseTransactionRequest, displayBlock: CloudEftpos.baseCustomDisplayBlock? = nil, promptBlock: CloudEftpos.baseCustomPromptBlock? = nil, signaturePromptBlock: CloudEftpos.baseCustomSignaturePromptBlock? = nil, withPresentingViewController: UIKit.UIViewController, animated: Swift.Bool, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
+  public func startTransaction(transactionRequest: CloudEftpos.TransactionRequest, withPresentingViewController: UIKit.UIViewController, animated: Swift.Bool, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
+  public func startTransaction(transactionRequest: CloudEftpos.TransactionRequest, displayBlock: CloudEftpos.customDisplayBlock? = nil, promptBlock: CloudEftpos.customPromptBlock? = nil, signaturePromptBlock: CloudEftpos.customSignaturePromptBlock? = nil, withPresentingViewController: UIKit.UIViewController, animated: Swift.Bool, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
   public func cancelTransaction()
   public func pairDevice(withPresenting: UIKit.UIViewController, animated: Swift.Bool, onCompletion: ((Swift.Error?) -> Swift.Void)? = nil)
   public func unpairDevice()
   public func advancedMenu(with presentingViewController: UIKit.UIViewController, animated: Swift.Bool, onClose: (() -> Swift.Void)?, onPrint: ((Swift.String?, Swift.String?) -> Swift.Void)?)
-  public func recoverTransaction(with posReference: Swift.String, transactionType: CloudEftpos.BaseTransactionType, amount: Swift.UInt32, presentingViewController: UIKit.UIViewController, animated: Swift.Bool, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
-  public func getLastTransaction(with posReference: Swift.String, transactionType: CloudEftpos.BaseTransactionType, amount: Swift.UInt32, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
+  public func recoverTransaction(with posReference: Swift.String, transactionType: CloudEftpos.TransactionType, amount: Swift.UInt32, presentingViewController: UIKit.UIViewController, animated: Swift.Bool, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
+  public func getLastTransaction(with posReference: Swift.String, transactionType: CloudEftpos.TransactionType, amount: Swift.UInt32, onCompletion: (([Swift.AnyHashable : Any]?, Swift.Error?) -> Swift.Void)?)
   public func sleepDevice()
   public func wakeDevice()
   public func deauthorise()

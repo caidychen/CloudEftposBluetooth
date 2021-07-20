@@ -30,7 +30,7 @@ onTransactionCompleted:(nonnull void (^)(NSDictionary * _Nullable result, NSErro
  *  @discussion The custom start transaction can be used if you require
  *  customisation of the prompt and signature callbacks.
  */
--(void) registerTransactionCallbacks:(nullable customDisplayBlock)displayBlock
+-(void) registerTransactionCallbacks:(nullable _customDisplayBlock)displayBlock
                              printBlock:(nullable void (^)(NSString * _Nullable type, NSNumber * _Nullable print, NSString * _Nullable text))printBlock
                         onCompletion:(nullable void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))onCompletion;
 
